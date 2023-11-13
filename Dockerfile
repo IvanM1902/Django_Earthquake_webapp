@@ -3,7 +3,7 @@
 ##
 # Start from an existing image with Miniconda installed
 FROM continuumio/miniconda3
-MAINTAINER Mark Foley
+MAINTAINER Ivan Medved
 
 ENV PYTHONUNBUFFERED 1
 ENV DJANGO_SETTINGS_MODULE=djangoProject.settings
