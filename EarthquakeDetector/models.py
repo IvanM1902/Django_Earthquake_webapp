@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.gis.db import models
 
-
 class Earthquakes(models.Model):
     date = models.CharField()
     time = models.CharField()

@@ -82,9 +82,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'gis',
-        'USER': 'docker',
+        'USER': 'docer',
         'PASSWORD': 'docker',
-        'HOST': 'wmap_postgis',
+        'HOST': 'awm2023',
         'PORT': '5432',
     }
 }
@@ -143,14 +143,14 @@ STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-DEPLOY_SECURE = True
+test_locally = True
+DEPLOY_SECURE = False
 
 
 import socket
 STATICFILES_STORAGE ='whitenoise.storage.CompressedManifestStaticFilesStorage'
-if socket.gethostname()=="C20338661":
-    DATABASES["default"]["HOST"] = "awm2023"
+if test_locally:
+    DATABASES["default"]["HOST"] = "127.0.0.1"
     DATABASES["default"]["PORT"] = 25432
 else:
     DATABASES["default"]["HOST"] = "wmap_postgis"
