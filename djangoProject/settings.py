@@ -82,9 +82,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'gis',
-        'USER': 'docer',
+        'USER': 'docker',
         'PASSWORD': 'docker',
-        'HOST': 'awm2023',
+        'HOST': 'wmap_postgis',
         'PORT': '5432',
     }
 }
@@ -132,3 +132,28 @@ STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DEPLOY_SECURE = True
+
+
+import socket
+STATICFILES_STORAGE ='whitenoise.storage.CompressedManifestStaticFilesStorage'
+if socket.gethostname()=="C20338661":
+    DATABASES["default"]["HOST"] = "awm2023"
+    DATABASES["default"]["PORT"] = 25432
+else:
+    DATABASES["default"]["HOST"] = "wmap_postgis"
+    DATABASES["default"]["PORT"] = 5432
+# Set DEPLOY_SECURE to True only for LIVE deployment
+if DEPLOY_SECURE:
+    DEBUG = False
+    TEMPLATES[0]["OPTIONS"]["debug"] = False
+    ALLOWED_HOSTS = ['c20338661.xyz','localhost',]
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+else:
+    DEBUG = True
+    TEMPLATES[0]["OPTIONS"]["debug"] = True
+    ALLOWED_HOSTS = ['*', ]
+    CSRF_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
